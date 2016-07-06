@@ -12,6 +12,7 @@ RUN rm -rf /etc/apt/source.list /etc/apt/sources.list.d/jessie-backports.list /e
   && echo LANG="zh_CN.UTF-8" >> /etc/environment \
   && echo LANGUAGE="zh_CN.UTF-8:zh:en_US:en" >> /etc/environment \
   && echo "Asia/Shanghai" > /etc/timezone \
-  && "cp" -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+  && "cp" -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+  && rm -rf /usr/local/tomcat/webapps/* 
 
 ENV TIMEZONE=Asia/Shanghai LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 LANGUAGE=zh_CN.UTF-8:zh:en_US:en
