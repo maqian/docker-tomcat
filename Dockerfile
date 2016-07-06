@@ -1,6 +1,7 @@
 FROM tomcat:8.5
 
 COPY sources.list.d/* /etc/apt/sources.list.d/
+COPY tomcat/conf/server.xml /usr/local/tomcat/conf/server.xml
 
 RUN rm -rf /etc/apt/source.list /etc/apt/sources.list.d/jessie-backports.list /etc/apt/sources.list.d/unstable.list \
   && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5 3B4FE6ACC0B21F32 \
