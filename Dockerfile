@@ -1,19 +1,15 @@
 FROM tomcat:8.5
 
-COPY sources.list.d/* /etc/apt/sources.list.d/
+MAINTAINER Ma Qian<maqian258@gmail.com>
+
 COPY tomcat/conf/server.xml /usr/local/tomcat/conf/server.xml
 
-RUN rm -rf /etc/apt/source.list /etc/apt/sources.list.d/jessie-backports.list /etc/apt/sources.list.d/unstable.list \
-  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5 3B4FE6ACC0B21F32 \
-  && apt-get update \
-  && apt-get -y install language-pack-zh-hans \
-  && sed -i 's/# zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/g' /etc/locale.gen \
-  && locale-gen \
-  && echo LC_ALL="zh_CN.UTF-8" >> /etc/environment \
-  && echo LANG="zh_CN.UTF-8" >> /etc/environment \
-  && echo LANGUAGE="zh_CN.UTF-8:zh:en_US:en" >> /etc/environment \
-  && echo "Asia/Shanghai" > /etc/timezone \
-  && "cp" -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-  && rm -rf /usr/local/tomcat/webapps/* 
+RUN rm -rf /usr/local/tomcat/webapps/* \
+  && rm -rf /etc/apt/sources.list /etc/apt/sources.list.d/* \
+  && curl -fsSL 'https://raw.githubusercontent.com/maqian/workarounds/master/debian/jessie/set-apt-sources-cn' | sh \
+  && curl -fsSL 'https://raw.githubusercontent.com/maqian/workarounds/master/debian/jessie/set-lang-cn' | sh \
+  && curl -fsSL 'https://raw.githubusercontent.com/maqian/workarounds/master/debian/jessie/set-timezone-cn' | sh \
+  && curl -fsSL 'https://raw.githubusercontent.com/maqian/workarounds/master/docker/java-limit-memory-installer' | sh
 
 ENV TIMEZONE=Asia/Shanghai LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 LANGUAGE=zh_CN.UTF-8:zh:en_US:en
+ENV JAVA_OPTS="-XX:+PrintVMOptions -XX:+PrintCommandLineFlags"
