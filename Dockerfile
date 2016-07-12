@@ -11,6 +11,6 @@ RUN rm -rf /usr/local/tomcat/webapps/* \
   && curl -sSL 'https://raw.githubusercontent.com/maqian/workarounds/master/debian/jessie/set-locale-cn' | sh \
   && curl -sSL 'https://raw.githubusercontent.com/maqian/workarounds/master/docker/java-limit-memory-installer' | sh
 
-ENV TIMEZONE=Asia/Shanghai \
-  LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 LANGUAGE=zh_CN.UTF-8:zh:en_US:en \
-  JAVA_OPTS="-XX:+PrintVMOptions -XX:+PrintCommandLineFlags"
+ENV TIMEZONE=Asia/Shanghai TZ=Asia/Shanghai \
+    LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 LANGUAGE=zh_CN.UTF-8:zh:en_US:en \
+    JAVA_OPTS="-XX:+PrintVMOptions -XX:+PrintCommandLineFlags"
